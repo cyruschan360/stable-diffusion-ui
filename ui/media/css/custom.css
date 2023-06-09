@@ -1,0 +1,30 @@
+#tab-settings, #tab-merge, #tab-about { 
+    display: none;
+}
+
+#footer > p {
+    display: none;
+}
+
+#editor-settings-entries tr:has(#stable_diffusion_model),
+#editor-settings-entries tr:has(#num_outputs_total),
+#editor-settings-entries tr:has(#width),
+#editor-settings-entries tr:has(#num_inference_steps),
+#editor-settings-entries tr:has(#hypernetwork_model) {
+    display: none;
+}
+
+#system-settings div[data-setting-id="diskPath"]:has(#diskPath),
+#system-info tr:has(#system-info-server-hosts) {
+    display: none;
+}
+
+#makeImage:disabled {
+    color: rgba(255,255,255,var(--text-opacity))!important;
+    opacity: .5!important;
+    cursor: not-allowed!important;
+}
+
+.imgItemInfo button.tasksBtns:nth-last-child(2) {
+    display: none;
+}

@@ -1,0 +1,1 @@
+{"render_devices": "auto", "update_branch": "beta", "ui": {"open_browser_on_start": false}, "model": {"stable-diffusion": "_default_"}, "model_vae": "vae-ft-mse-840000-ema-pruned", "vram_usage_level": "balanced", "net": {"listen_to_network": true, "listen_port": 9000}, "force_save_path": "D:/StableDiffusion/output", "test_diffusers": true}
