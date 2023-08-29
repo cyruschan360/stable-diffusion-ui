@@ -1,6 +1,6 @@
 @echo off
 
-@echo. & echo "Easy Diffusion - v2" & echo.
+@echo. & echo "Easy Diffusion - v3" & echo.
 
 set PATH=C:\Windows\System32;%PATH%
 
@@ -46,6 +46,8 @@ if "%update_branch%"=="" (
 
     @cd sd-ui-files
 
+    @call git add -A .
+    @call git stash
     @call git reset --hard
     @call git -c advice.detachedHead=false checkout "%update_branch%"
     @call git pull
