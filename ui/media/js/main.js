@@ -504,7 +504,7 @@ function showImages(reqBody, res, outputContainer, livePreview) {
                     },
                 ],
                 { text: "Make Similar Images", on_click: onMakeSimilarClick },
-                { text: "Draw another 25 steps", on_click: onContinueDrawingClick },
+                //{ text: "Draw another 25 steps", on_click: onContinueDrawingClick },
                 [
                     { html: '<i class="fa-solid fa-undo"></i> Undo', on_click: onUndoFilter },
                     { html: '<i class="fa-solid fa-redo"></i> Redo', on_click: onRedoFilter },
@@ -645,15 +645,15 @@ function modifyCurrentRequest(...reqDiff) {
 function onMakeSimilarClick(req, img) {
     const newTaskRequest = modifyCurrentRequest(req, {
         num_outputs: 1,
-        num_inference_steps: 50,
+        num_inference_steps: 25,
         guidance_scale: 7.5,
         prompt_strength: 0.7,
         init_image: img.src,
         seed: Math.floor(Math.random() * 10000000),
     })
 
-    newTaskRequest.numOutputsTotal = 5
-    newTaskRequest.batchCount = 5
+    newTaskRequest.numOutputsTotal = 1
+    newTaskRequest.batchCount = 1
 
     delete newTaskRequest.reqBody.mask
 

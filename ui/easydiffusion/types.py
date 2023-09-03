@@ -12,7 +12,7 @@ class GenerateImageRequest(BaseModel):
     height: int = 512
 
     num_outputs: int = 1
-    num_inference_steps: int = 50
+    num_inference_steps: int = 25
     guidance_scale: float = 7.5
 
     init_image: Any = None
@@ -75,7 +75,7 @@ class RenderTaskData(TaskData):
     use_upscale: Union[str, List[str]] = None
     upscale_amount: int = 4  # or 2
     latent_upscaler_steps: int = 10
-    use_stable_diffusion_model: Union[str, List[str]] = "sd-v1-4"
+    use_stable_diffusion_model: Union[str, List[str]] = "v1-5-pruned-emaonly"
     use_vae_model: Union[str, List[str]] = None
     use_hypernetwork_model: Union[str, List[str]] = None
     use_lora_model: Union[str, List[str]] = None
@@ -92,6 +92,10 @@ class RenderTaskData(TaskData):
     clip_skip: bool = False
     codeformer_upscale_faces: bool = False
     codeformer_fidelity: float = 0.5
+
+    client_ip: str = None
+    daily_quota: int = 30
+    usage: int = 0
 
 
 class MergeRequest(BaseModel):

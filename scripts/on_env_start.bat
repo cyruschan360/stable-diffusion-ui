@@ -67,6 +67,7 @@ if "%update_branch%"=="" (
 )
 
 @xcopy sd-ui-files\ui ui /s /i /Y /q
+@xcopy sd-ui-files\plugins\ui plugins\ui /s /i /Y /q
 @copy sd-ui-files\scripts\on_sd_start.bat scripts\ /Y
 @copy sd-ui-files\scripts\check_modules.py scripts\ /Y
 @copy sd-ui-files\scripts\get_config.py scripts\ /Y

@@ -2,6 +2,7 @@
 Notes:
     async endpoints always run on the main thread. Without they run on the thread pool.
 """
+import asyncio
 import datetime
 import mimetypes
 import os
@@ -22,7 +23,7 @@ from easydiffusion.types import (
     convert_legacy_render_req_to_new,
 )
 from easydiffusion.utils import log
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Extra
 from starlette.responses import FileResponse, JSONResponse, StreamingResponse
@@ -32,6 +33,7 @@ log.info(f"started in {app.SD_DIR}")
 log.info(f"started at {datetime.datetime.now():%x %X}")
 
 server_api = FastAPI()
+usage_history = {}
 
 NOCACHE_HEADERS = {
     "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -103,12 +105,12 @@ def init():
         return read_web_data_internal(key, scan_for_malicious=scan_for_malicious)
 
     @server_api.get("/ping")  # Get server and optionally session status.
-    def ping(session_id: str = None):
-        return ping_internal(session_id)
+    def ping(session_id: str = None, client_ip: str = Header(None, alias='CF-Connecting-IP')):
+        return ping_internal(session_id, client_ip)
 
     @server_api.post("/render")
-    def render(req: dict):
-        return render_internal(req)
+    async def render(req: dict, client_ip: str = Header(None, alias='CF-Connecting-IP')):
+        return await render_internal(req, client_ip)
 
     @server_api.post("/filter")
     def render(req: dict):
@@ -239,7 +241,7 @@ def read_web_data_internal(key: str = None, **kwargs):
         raise HTTPException(status_code=404, detail=f"Request for unknown {key}")  # HTTP404 Not Found
 
 
-def ping_internal(session_id: str = None):
+def ping_internal(session_id: str = None, client_ip: str = None):
     if task_manager.is_alive() <= 0:  # Check that render threads are alive.
         if task_manager.current_state_error:
             raise HTTPException(status_code=500, detail=str(task_manager.current_state_error))
@@ -262,11 +264,23 @@ def ping_internal(session_id: str = None):
     if cloudflare.address != None:
         response["cloudflare"] = cloudflare.address
 
+    # Show quota and usage
+    config = app.getConfig()
+    user_id = get_userid(session_id, client_ip)
+    response["quota"] = config["daily_quota"]
+    response["usage"] = get_usage(user_id)
+
     return JSONResponse(response, headers=NOCACHE_HEADERS)
 
 
-def render_internal(req: dict):
+async def render_internal(req: dict, client_ip: str):
     try:
+        config = app.getConfig()
+        
+        # Overwrite user specified block_nsfw
+        if "block_nsfw" in config:
+            req["block_nsfw"] = config["block_nsfw"]
+
         req = convert_legacy_render_req_to_new(req)
 
         # separate out the request data into rendering and task-specific data
@@ -277,7 +291,6 @@ def render_internal(req: dict):
         save_data: SaveToDiskData = SaveToDiskData.parse_obj(req)
 
         # Overwrite user specified save path
-        config = app.getConfig()
         if "force_save_path" in config:
             save_data.save_to_disk_path = config["force_save_path"]
 
@@ -290,8 +303,35 @@ def render_internal(req: dict):
             task_data.vram_usage_level,
         )
 
+        # Overwrite user specified num_outputs
+        if "num_outputs" in config:
+            render_req.num_outputs = config["num_outputs"]
+
+        # Overwrite user specified daily_quota
+        if "daily_quota" in config:
+            task_data.daily_quota = config["daily_quota"]
+
+        # Pass client IP address to task
+        task_data.client_ip = client_ip
+
+        # Pass current usage to task
+        user_id = get_userid(task_data.session_id, client_ip)
+        task_data.usage = get_usage(user_id)
+
         # enqueue the task
         task = RenderTask(render_req, task_data, models_data, output_format, save_data)
+
+        # Increment usage
+        global usage_history
+        if usage_history.get(user_id) is None:
+            usage_history[user_id] = 1
+        else:
+            usage_history[user_id] += 1
+
+        # Decrease task priority of high usage user
+        timeout = usage_history[user_id] // 5
+        await asyncio.sleep(timeout)
+
         return enqueue_task(task)
     except HTTPException as e:
         raise e
@@ -467,6 +507,23 @@ def modify_package_internal(package_name: str, req: dict):
         log.error(str(e))
         log.error(traceback.format_exc())
         return HTTPException(status_code=500, detail=str(e))
+
+
+def get_userid(session_id: str = None, client_ip: str = None):
+    # Set user identifier
+    if client_ip is None:
+        return session_id
+    else:
+        return f'{client_ip}_{datetime.date.today()}'
+
+
+def get_usage(user_id: str = None):
+    global usage_history
+    
+    if usage_history.get(user_id) is None:
+        return 0
+    else:
+        return usage_history[user_id]
 
 
 def get_sha256_internal(obj_path):

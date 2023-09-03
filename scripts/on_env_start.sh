@@ -49,6 +49,7 @@ fi
 
 rm -rf ui
 cp -Rf sd-ui-files/ui .
+cp -Rf sd-ui-files/plugins/ui ./plugins/
 cp sd-ui-files/scripts/on_sd_start.sh scripts/
 cp sd-ui-files/scripts/bootstrap.sh scripts/
 cp sd-ui-files/scripts/check_modules.py scripts/

@@ -5,7 +5,7 @@
     const RETRY_DELAY_IF_BUFFER_IS_EMPTY = 1000 // ms
     const RETRY_DELAY_IF_SERVER_IS_BUSY = 30 * 1000 // ms, status_code 503, already a task running
     const RETRY_DELAY_ON_ERROR = 4000 // ms
-    const TASK_STATE_SERVER_UPDATE_DELAY = 1500 // ms
+    const TASK_STATE_SERVER_UPDATE_DELAY = 3000 // ms
     const SERVER_STATE_VALIDITY_DURATION = 90 * 1000 // ms - 90 seconds to allow ping to timeout more than once before killing tasks.
     const HEALTH_PING_INTERVAL = 5000 // ms
     const IDLE_COOLDOWN = 2500 // ms
@@ -265,6 +265,12 @@
             }
             serverState.time = Date.now()
             await eventSource.fireEvent(EVENT_PING, serverState)
+
+            window.postMessage({ 
+                "quota": serverState.quota,
+                "usage": serverState.usage
+            }, location.origin);
+
             return true
         } catch (e) {
             console.error(e)
@@ -767,9 +773,9 @@
     }
     const TASK_DEFAULTS = {
         sampler_name: "plms",
-        use_stable_diffusion_model: "sd-v1-4",
+        use_stable_diffusion_model: "v1-5-pruned-emaonly",
         clip_skip: false,
-        num_inference_steps: 50,
+        num_inference_steps: 25,
         guidance_scale: 7.5,
         negative_prompt: "",
 

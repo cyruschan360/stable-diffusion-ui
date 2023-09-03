@@ -1,0 +1,50 @@
+#tab-settings, #tab-merge, #tab-about { 
+    display: none;
+}
+
+#footer > p {
+    display: none;
+}
+
+#footer .faq {
+    margin: 2em 0;
+    font-size: 11pt;
+}
+
+#footer .adsbygoogle {
+    text-align: center;
+}
+
+#editor-settings-entries tr:has(#num_outputs_total),
+#editor-settings-entries tr:has(#width),
+#editor-settings-entries tr:has(#num_inference_steps),
+#editor-settings-entries tr:has(#hypernetwork_model),
+#editor-settings-entries li:has(#stream_image_progress) {
+    display: none;
+}
+
+#system-settings div[data-setting-id="diskPath"]:has(#diskPath),
+#system-info tr:has(#system-info-server-hosts) {
+    display: none;
+}
+
+#makeImage:disabled {
+    color: rgba(255,255,255,var(--text-opacity))!important;
+    opacity: .5!important;
+    cursor: not-allowed!important;
+}
+
+.imgItemInfo button.tasksBtns:nth-last-child(2) {
+    display: none;
+}
+
+#preview #initial-text {
+    padding: 1em;
+}
+
+#tab-content-faq .tab-content-inner {
+    text-align: left;
+    max-width: 100%;
+    margin: auto;
+    padding: 10pt;
+}

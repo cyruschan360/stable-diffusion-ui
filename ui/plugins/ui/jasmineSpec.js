@@ -190,7 +190,7 @@ describe("stable-diffusion-ui", function() {
                 seed: Math.floor(Math.random() * 10000000),
 
                 sampler: "plms",
-                use_stable_diffusion_model: "sd-v1-4",
+                use_stable_diffusion_model: "v1-5-pruned-emaonly",
                 num_inference_steps: nbr_steps,
                 guidance_scale: 7.5,
 

@@ -2,6 +2,7 @@ import json
 import pprint
 import queue
 import time
+import datetime
 
 from easydiffusion import model_manager, runtime
 from easydiffusion.types import GenerateImageRequest, ModelsData, OutputFormatData, SaveToDiskData
@@ -61,6 +62,14 @@ class RenderTask(Task):
                 self.task_data.filters.append("nsfw_checker")
                 self.models_data.model_paths["nsfw_checker"] = "nsfw_checker"
 
+        def check_quota():
+            # Check quota
+            if self.task_data.usage >= self.task_data.daily_quota:
+                log.info(f'User daily quota exceed.')
+                return False
+            else:
+                return True
+
         def step_callback():
             task_manager.keep_task_alive(self)
             task_manager.current_state = task_manager.ServerStates.Rendering
@@ -74,6 +83,13 @@ class RenderTask(Task):
                     task_manager.current_state_error = None
                     log.info(f"Session {self.session_id} sent cancel signal for task {self.id}")
 
+        remain_quota = check_quota()
+        if not remain_quota:
+            context.stop_processing = True
+            self.error = StopAsyncIteration()
+            self.response = {}
+            return False
+        
         task_manager.current_state = task_manager.ServerStates.LoadingModel
         model_manager.resolve_model_paths(self.models_data)
 

@@ -37,7 +37,7 @@ MODEL_EXTENSIONS = {
 }
 DEFAULT_MODELS = {
     "stable-diffusion": [
-        {"file_name": "sd-v1-5.safetensors", "model_id": "1.5-pruned-emaonly-fp16"},
+        {"file_name": "sd_xl_base_1.0.safetensors", "model_id": "sd-xl-base-1.0"},
     ],
     "gfpgan": [
         {"file_name": "GFPGANv1.4.pth", "model_id": "1.4"},
@@ -322,7 +322,7 @@ def is_malicious_model(file_path):
 def getModels(scan_for_malicious: bool = True):
     models = {
         "options": {
-            "stable-diffusion": [],
+            "stable-diffusion": [{"sd_xl_base_1.0": "SD XL 1.0 Base"},{"sd_xl_refiner_1.0": "SD XL 1.0 Refiner"},{"v1-5-pruned-emaonly": "SD 1.5 Pruned EMA"}],
             "vae": [],
             "hypernetwork": [],
             "lora": [],

@@ -185,6 +185,7 @@ def setConfig(config):
         config_yaml_path = os.path.abspath(config_yaml_path)
         yaml = YAML()
 
+        """
         if not hasattr(config, "_yaml_comment"):
             config_yaml_sample_path = os.path.join(CONFIG_DIR, "config.yaml.sample")
 
@@ -213,6 +214,7 @@ def setConfig(config):
         with open(config_yaml_path + ".tmp", "r", encoding="utf-8") as f:
             yaml.load(f)
         shutil.move(config_yaml_path + ".tmp", config_yaml_path)
+        """
     except:
         log.error(traceback.format_exc())
 
