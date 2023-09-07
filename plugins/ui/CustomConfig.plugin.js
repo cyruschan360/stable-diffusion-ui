@@ -18,7 +18,7 @@
         {"key":"vae_model","value":"sdxl_vae","ignore":false},
         {"key":"hypernetwork_model","value":"","ignore":false},
         {"key":"lora_model","value":"","ignore":false},
-        {"key":"sampler_name","value":"dpmpp_2m_sde","ignore":false},
+        {"key":"sampler_name","value":"dpmpp_2m","ignore":false},
         {"key":"width","value":"1024","ignore":false},
         {"key":"height","value":"1024","ignore":false},
         {"key":"num_inference_steps","value":"25","ignore":false},
