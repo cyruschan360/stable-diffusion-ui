@@ -26,3 +26,5 @@ You can choose below LoRA in "Image Settings" > "LoRA",
 - Paper Cut
 - Pixel Art
 - Serafini style
+- Chinese Ink Painting
+- Ink Punk
