@@ -25,6 +25,8 @@ You can choose below LoRA in "Image Settings" > "LoRA",
 - Dream Art
 - Paper Cut
 - Pixel Art
-- Serafini style
-- Chinese Ink Painting
-- Ink Punk
+- Luigi Serafini style (imitate the Italian artist, architect and industrial designer, most famous for his book "Codex Seraphinianus")
+- Chinese Ink Painting (generate landscape scenery in Chinese traditional painting style)
+- Ink Punk (crave the gritty, edgy look of inkpunk art)
+- Classipeint (oil paint style LoRA)
+- More Art (enhance/improve image to get more aesthetic/artistic/creative, detailled)
