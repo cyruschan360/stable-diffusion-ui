@@ -16,15 +16,12 @@ import shutil
 from pathlib import Path
 from pprint import pprint
 
-from rich.console import Console
-from rich.panel import Panel
-
 os_name = platform.system()
 
 modules_to_check = {
     "torch": ("1.11.0", "1.13.1", "2.0.0", "2.0.1"),
     "torchvision": ("0.12.0", "0.14.1", "0.15.1", "0.15.2"),
-    "sdkit": "2.0.10",
+    "sdkit": "2.0.12",
     "stable-diffusion-sdkit": "2.1.4",
     "rich": "12.6.0",
     "uvicorn": "0.19.0",
@@ -217,16 +214,16 @@ def get_config():
 
 def setup_amd_environment():
     if not os.access("/dev/kfd", os.W_OK):
-        Console().print(
-            Panel(
-                "\n"
-                + "[black]EasyDiffusion has no write access to /dev/kfd.\n\n"
+        print(
+                  "#########################################################################\n"
+                + "#           EasyDiffusion has no write access to /dev/kfd.              #\n"
+                + "#########################################################################\n"
+                + "\n"
                 + "Without this, the ROCm driver will probably not be able to initialize the GPU and EasyDiffusion will use the CPU for rendering.\n"
-                + f"Follow the instructions on this site to configure the access:\n"
-                + f"[bold yellow underline]https://github.com/easydiffusion/easydiffusion/wiki/AMD-on-Linux#access-permissions\n",
-                title="Missing write access to /dev/kfd",
-                style="white on red",
-            )
+                + "\n"
+                + "Follow the instructions on this site to configure the access:\n"
+                + "https://github.com/easydiffusion/easydiffusion/wiki/AMD-on-Linux#access-permissions\n"
+                + "\n"
         )
 
     gpus = list(filter(lambda x: ("amdgpu" in x), open("/proc/bus/pci/devices", "r").readlines()))

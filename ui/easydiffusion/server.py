@@ -527,7 +527,6 @@ def get_usage(user_id: str = None):
 
 
 def get_sha256_internal(obj_path):
-    import hashlib
     from easydiffusion.utils import sha256sum
 
     path = obj_path.split("/")
