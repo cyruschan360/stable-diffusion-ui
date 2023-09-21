@@ -48,3 +48,8 @@
     margin: auto;
     padding: 10pt;
 }
+
+/* Buymeacoffee */
+#bmc-wbtn img {
+    box-shadow: none;
+}
