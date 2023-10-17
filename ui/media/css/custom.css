@@ -50,7 +50,7 @@
 }
 
 /* Buymeacoffee */
-#bmc-wbtn {
+#bmc-wbtn, #bmc-wbtn + div {
     visibility: hidden;
 }
 
