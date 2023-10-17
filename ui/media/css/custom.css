@@ -52,6 +52,7 @@
 /* Buymeacoffee */
 #bmc-wbtn, #bmc-wbtn + div {
     visibility: hidden;
+    display: none;
 }
 
 #bmc-wbtn img {
