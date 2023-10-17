@@ -50,6 +50,10 @@
 }
 
 /* Buymeacoffee */
+#bmc-wbtn {
+    visibility: hidden;
+}
+
 #bmc-wbtn img {
     box-shadow: none;
 }
