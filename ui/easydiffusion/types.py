@@ -95,7 +95,7 @@ class RenderTaskData(TaskData):
     codeformer_fidelity: float = 0.5
 
     client_ip: str = None
-    daily_quota: int = 30
+    daily_quota: int = 100
     usage: int = 0
 
 

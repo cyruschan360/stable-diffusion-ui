@@ -11,6 +11,6 @@ net:
   listen_port: 9000
 force_save_path: "/data/easy-diffusion-images"
 test_diffusers: true
-daily_quota: 30
+daily_quota: 100
 num_outputs: 1
 block_nsfw: true
