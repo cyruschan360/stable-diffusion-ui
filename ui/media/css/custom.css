@@ -58,3 +58,8 @@
 #bmc-wbtn img {
     box-shadow: none;
 }
+
+.gigantic-work #bmc-wbtn, .gigantic-work #bmc-wbtn + div {
+    visibility: visible;
+    display: block;
+}
