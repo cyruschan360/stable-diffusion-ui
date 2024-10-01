@@ -11,8 +11,8 @@
         let displayAds = document.createElement("ins");
         displayAds.classList.add("adsbygoogle");
         displayAds.style.cssText = 'display:block;';
-        displayAds.setAttribute("data-ad-client", "ca-pub-6738885094003587");
-        displayAds.setAttribute("data-ad-slot", "9143190715");
+        displayAds.setAttribute("data-ad-client", "ca-pub-4392666856868592");
+        displayAds.setAttribute("data-ad-slot", "8235645523");
         displayAds.setAttribute("data-ad-format", "auto");
         displayAds.setAttribute("data-full-width-responsive", "true");
 
