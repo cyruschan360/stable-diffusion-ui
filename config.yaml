@@ -14,3 +14,4 @@ test_diffusers: true
 daily_quota: 100
 num_outputs: 1
 block_nsfw: true
+backend: "webui"

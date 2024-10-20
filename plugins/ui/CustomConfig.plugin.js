@@ -54,7 +54,8 @@
         {"key":"auto_scroll","value":false,"ignore":false},
         {"key":"zip_toggle","value":true,"ignore":false},
         {"key":"tree_toggle","value":true,"ignore":false},
-        {"key":"json_toggle","value":true,"ignore":false}
+        {"key":"json_toggle","value":true,"ignore":false},
+        {"key":"backend","value":"webui","ignore":false}
     ];
 
     let saved_settings = JSON.parse(localStorage.getItem('user_settings_v2'));
