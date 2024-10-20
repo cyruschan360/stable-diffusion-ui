@@ -18,17 +18,17 @@
 
         let preview = document.getElementById('preview');
         preview.prepend(displayAds.cloneNode());
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        //(adsbygoogle = window.adsbygoogle || []).push({});
 
         let footer = document.getElementById('footer');
         footer.prepend(displayAds.cloneNode());
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        //(adsbygoogle = window.adsbygoogle || []).push({});
 
         let insertTaskAds = function () {
             let inTaskAds = displayAds.cloneNode();
             let el = document.querySelector('.imageTaskContainer');
             el.appendChild(inTaskAds);
-            (adsbygoogle = window.adsbygoogle || []).push({});
+            //(adsbygoogle = window.adsbygoogle || []).push({});
         }
 
         const superCreateTask = window.createTask;
